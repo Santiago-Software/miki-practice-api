@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.10.35122.118
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "miki-practice-api", "miki-practice-api.csproj", "{804E2C78-BA05-430E-9A2C-304FA20DAF88}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{804E2C78-BA05-430E-9A2C-304FA20DAF88}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{804E2C78-BA05-430E-9A2C-304FA20DAF88}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{804E2C78-BA05-430E-9A2C-304FA20DAF88}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{804E2C78-BA05-430E-9A2C-304FA20DAF88}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {F84275FC-21BD-4DDE-8390-FF076DF68312}
+	EndGlobalSection
+EndGlobal

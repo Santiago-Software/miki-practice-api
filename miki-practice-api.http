@@ -1,0 +1,6 @@
+@miki_practice_api_HostAddress = http://localhost:5073
+
+GET {{miki_practice_api_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
