@@ -11,7 +11,16 @@ namespace miki_practice_api.Controllers
         private readonly MikiService mikiService; //DI for my service
         public MikiController(MikiService mikiService) //constructor for DI
         {
-            this.mikiService = mikiService;
+            this.mikiService = mikiService; //Assign the injected service to the private field.
         }
+
+        // GET: api/Miki
+        [HttpGet]
+        public IActionResult GetAllData()
+        {
+            var data = mikiService.GetAll();
+            return Ok(data);// Returns the data as JSON with a 200 OK status.
+        }
+
     }
 }
