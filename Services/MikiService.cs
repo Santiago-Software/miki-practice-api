@@ -11,7 +11,7 @@ namespace miki_practice_api.Services
 
         public MikiService(IConfiguration configuration)
         {
-            connectionString = configuration.GetConnectionString("DefaultConnection");
+            connectionString = configuration.GetConnectionString("DefaultConnection")!; //"!" = The connection string is not null
         }
 
 
