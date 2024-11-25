@@ -1,3 +1,8 @@
+using miki_practice_api.Services;
+using Oracle.ManagedDataAccess.Client;
+using Microsoft.Extensions.Configuration;
+
+
 
 namespace miki_practice_api
 {
@@ -7,30 +12,42 @@ namespace miki_practice_api
         {
             var builder = WebApplication.CreateBuilder(args);
 
-            // Add services to the container.
-
             builder.Services.AddControllers();
-            // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
+            builder.Services.AddSingleton<MikiService>();
+            builder.Services.AddSingleton<IConfiguration>(builder.Configuration);
+
+
+            builder.Services.AddSingleton<OracleConnection>(sp =>
+            {
+                var configuration = sp.GetRequiredService<IConfiguration>();
+                var connectionString = configuration.GetConnectionString("OracleDb"); 
+                return new OracleConnection(connectionString); 
+            });
+
+
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
 
             var app = builder.Build();
 
-            // Configure the HTTP request pipeline.
             if (app.Environment.IsDevelopment())
             {
+                // Enable Swagger and Swagger UI for development.
                 app.UseSwagger();
                 app.UseSwaggerUI();
             }
 
+            // Use HTTPS redirection for secure communication.
             app.UseHttpsRedirection();
 
-            app.UseAuthorization();
 
-
+            // Map controllers to their corresponding routes.
             app.MapControllers();
 
+            // Run the application.
             app.Run();
+
+
         }
     }
 }

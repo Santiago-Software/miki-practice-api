@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Miki.Services;
-using Miki.Models;
+using miki_practice_api.Services;
+using miki_practice_api.Models;
 
 namespace miki_practice_api.Controllers
 {
