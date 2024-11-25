@@ -19,11 +19,33 @@ namespace miki_practice_api.Services
 
         public List<MikiModel> GetAll()
         {
-            var records = new List<MikiModel>();
+            var records = new List<MikiModel>(); 
             using (var connection =  new OracleConnection(connectionString))
             {
                 connection.Open();
+
+                string query = "SELECT ID, NAME, PRICE, STOCK FROM MIKI_TABLE"; 
+
+                using (var command = new OracleCommand(query, connection))
+                {
+                    using (var reader = command.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            //mapping the columns
+                            //if needed change GetInt32 to GetInt64
+                            records.Add(new MikiModel
+                                {
+                                Id = reader.GetInt32(0),
+                                Name = reader.GetString(1),
+                                Price = reader.GetInt32(2),
+                                Stock = reader.GetInt32(3)
+                            });
+                        }
+                    }
+                }
             }
+            return records; //a list where each row is a JSON
         }
     }
 }
