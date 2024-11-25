@@ -1,3 +1,4 @@
+using miki_practice_api.Hubs;
 using miki_practice_api.Services;
 using Oracle.ManagedDataAccess.Client;
 using Microsoft.Extensions.Configuration;
@@ -13,6 +14,7 @@ namespace miki_practice_api
             var builder = WebApplication.CreateBuilder(args);
 
             builder.Services.AddControllers();
+            builder.Services.AddSignalR();
             builder.Services.AddSingleton<MikiService>();
             builder.Services.AddSingleton<IConfiguration>(builder.Configuration);
 
@@ -39,6 +41,8 @@ namespace miki_practice_api
 
             // Use HTTPS redirection for secure communication.
             app.UseHttpsRedirection();
+
+            app.MapHub<DataHub>("/dataHub");
 
 
             // Map controllers to their corresponding routes.
