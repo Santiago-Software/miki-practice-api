@@ -9,11 +9,10 @@ using System.Threading.Tasks;
 
 namespace miki_practice_api.BackgroundTasks
 {
-    public class DatabaseNotifier : BackgroundService, IDisposable
+    public class DatabaseNotifier : BackgroundService
     {
         private readonly IHubContext<DataHub> _hubContext;
         private readonly MikiService _mikiService;
-        private Timer _timer;
 
         public DatabaseNotifier(IHubContext<DataHub> hubContext, MikiService mikiService)
         {
@@ -21,28 +20,16 @@ namespace miki_practice_api.BackgroundTasks
             _mikiService = mikiService; 
         }
 
-        public Task StartAsync(CancellationToken cancellationToken)
+        protected override async Task ExecuteAsync(CancellationToken stoppingToken)
         {
-            _timer = new Timer(NotifyClients, null, TimeSpan.Zero, TimeSpan.FromSeconds(30));  // Trigger every 30 seconds
-            return Task.CompletedTask; // Returning a completed task
-        }
-        private async void NotifyClients(object state)
-        {
-            var data = _mikiService.GetAll(); // Get data from DB via MikiService
-            await _hubContext.Clients.All.SendAsync("ReceiveData", data); // Send data to all connected clients
-        }
+            while (!stoppingToken.IsCancellationRequested)
+            {
+                var data = _mikiService.GetAll(); // Use MikiService to pull data from the database
 
+                await _hubContext.Clients.All.SendAsync("ReceiveUpdate", data);
 
-        public Task StopAsync(CancellationToken cancellationToken)
-        {
-            _timer?.Change(Timeout.Infinite, 0);  // Stop the timer when the service is stopped
-            return Task.CompletedTask;
-        }
-
-        public void Dispose()
-        {
-            _timer?.Dispose(); // Dispose the timer when the service is disposed
-        }
+                await Task.Delay(TimeSpan.FromMinutes(1), stoppingToken);
+            }
 
     }
     
