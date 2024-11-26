@@ -17,9 +17,9 @@ namespace miki_practice_api.Services
             connectionString = configuration.GetConnectionString("DefaultConnection")!; //"!" = The connection string is not null
         }
 
-        public List<MikiModel> GetAll()
+        public List<MikiProducts> GetAll()
         {
-            var records = new List<MikiModel>(); 
+            var records = new List<MikiProducts>(); 
             using (var connection =  new OracleConnection(connectionString))
             {
                 connection.Open();
@@ -34,7 +34,7 @@ namespace miki_practice_api.Services
                         {
                             //mapping the columns
                             //if needed change GetInt32 to GetInt64
-                            records.Add(new MikiModel
+                            records.Add(new MikiProducts
                                 {
                                 Id = reader.GetInt32(0),
                                 Name = reader.GetString(1),
